@@ -1,0 +1,85 @@
+@startuml
+left to right direction
+
+' Definición del Actor
+actor "Administrador" as Actor
+
+' Frontera del Sistema
+package "Sistema de Gestión" {
+
+    ' Casos de Uso Principales
+    usecase "Gestionar Producto" as UC_Prod
+    usecase "Gestionar Proveedores" as UC_Prov
+    usecase "Gestionar Ventas" as UC_Ventas
+    usecase "Gestionar Compra" as UC_Compra
+    usecase "Gestionar Reportes" as UC_Report
+    usecase "Autenticación" as UC_Auth
+
+    ' Sub-Casos de Uso para Gestionar Producto
+    usecase "Registrar nuevo producto" as UC_Prod_Reg
+    usecase "Consultar lista de producto" as UC_Prod_Cons
+    usecase "Abastecer Stock de producto" as UC_Prod_Stock
+
+    ' Sub-Casos de Uso para Gestionar Proveedores
+    usecase "Registrar nuevo proveedor" as UC_Prov_Reg
+    usecase "Consultar lista de proveedor" as UC_Prov_Cons
+
+    ' Sub-Casos de Uso para Gestionar Ventas
+    usecase "Registrar venta" as UC_Ventas_Reg
+    usecase "Consultar historial de ventas" as UC_Ventas_Cons
+    usecase "Ver detalles de venta" as UC_Ventas_Detalle
+
+    ' Sub-Casos de Uso para Gestionar Compra
+    usecase "Registrar compra" as UC_Compra_Reg
+    usecase "Consultar historial de compra" as UC_Compra_Cons
+    usecase "Ver tipo de compra" as UC_Compra_Tipo
+
+    ' Sub-Casos de Uso para Gestionar Reportes
+    usecase "Generar reportes del día" as UC_Report_Dia
+    usecase "Generar reportes de la semana" as UC_Report_Sem
+    usecase "Generar reportes del mes" as UC_Report_Mes
+
+    ' Sub-Casos de Uso para Autenticación
+    usecase "Iniciar sesión" as UC_Auth_Start
+    usecase "Cerrar sesión" as UC_Auth_End
+
+    ' Relaciones de Inclusión (Sub-Casos)
+
+    ' Gestionar Producto <<include>>
+    UC_Prod .> UC_Prod_Reg : <<include>>
+    UC_Prod .> UC_Prod_Cons : <<include>>
+    UC_Prod .> UC_Prod_Stock : <<include>>
+
+    ' Gestionar Proveedores <<include>>
+    UC_Prov .> UC_Prov_Reg : <<include>>
+    UC_Prov .> UC_Prov_Cons : <<include>>
+
+    ' Gestionar Ventas <<include>>
+    UC_Ventas .> UC_Ventas_Reg : <<include>>
+    UC_Ventas .> UC_Ventas_Cons : <<include>>
+    UC_Ventas .> UC_Ventas_Detalle : <<include>>
+
+    ' Gestionar Compra <<include>>
+    UC_Compra .> UC_Compra_Reg : <<include>>
+    UC_Compra .> UC_Compra_Cons : <<include>>
+    UC_Compra .> UC_Compra_Tipo : <<include>>
+
+    ' Gestionar Reportes <<include>>
+    UC_Report .> UC_Report_Dia : <<include>>
+    UC_Report .> UC_Report_Sem : <<include>>
+    UC_Report .> UC_Report_Mes : <<include>>
+
+    ' Autenticación <<include>>
+    UC_Auth .> UC_Auth_Start : <<include>>
+    UC_Auth .> UC_Auth_End : <<include>>
+}
+
+' Relaciones de Asociación (Actor con Casos de Uso Principales)
+Actor -- UC_Prod
+Actor -- UC_Prov
+Actor -- UC_Ventas
+Actor -- UC_Compra
+Actor -- UC_Report
+Actor -- UC_Auth
+
+@enduml

@@ -1,0 +1,25 @@
+Crear un diagrama de secuencia UML para el proceso "Abastecer Stock de un Producto" en un sistema de inventario.
+
+**Actores y Objetos (Lifelines):**
+- **:Administrador** (Actor)
+- **:Sistema** (La interfaz con la que interactúa el usuario)
+- **:ControladorProducto** (Maneja la lógica de negocio para los productos)
+- **:BaseDeDatos** (Representa el almacenamiento de datos)
+
+**Flujo de Eventos (Mensajes):**
+
+1.  El **:Administrador** ya ha iniciado sesión en el sistema.
+2.  El **:Administrador** solicita ver la lista de productos al **:Sistema**.
+3.  El **:Sistema** invoca al **:ControladorProducto** para obtener la lista.
+4.  El **:ControladorProducto** ejecuta una consulta en la **:BaseDeDatos** para buscar todos los productos.
+5.  La **:BaseDeDatos** devuelve la lista de productos al **:ControladorProducto**.
+6.  El **:ControladorProducto** envía la lista de productos al **:Sistema**.
+7.  El **:Sistema** muestra la lista completa de productos al **:Administrador**.
+8.  El **:Administrador** selecciona un producto específico de la lista y elige la opción "Abastecer".
+9.  El **:Sistema** muestra una interfaz para ingresar la cantidad de stock a añadir y se la solicita al **:Administrador**.
+10. El **:Administrador** introduce la cantidad a agregar (ej. 50 unidades) y confirma la operación.
+11. El **:Sistema** envía la solicitud de actualización de stock al **:ControladorProducto**, pasando el ID del producto y la cantidad.
+12. El **:ControladorProducto** ejecuta una operación de actualización (`UPDATE`) en la **:BaseDeDatos** para incrementar el stock del producto correspondiente.
+13. La **:BaseDeDatos** confirma que la actualización fue exitosa.
+14. El **:ControladorProducto** notifica al **:Sistema** que el stock ha sido actualizado.
+15. Finalmente, el **:Sistema** muestra un mensaje de confirmación al **:Administrador** (ej. "Stock actualizado correctamente").

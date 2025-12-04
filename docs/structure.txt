@@ -1,0 +1,95 @@
+proyecto/
+├── api/ 
+|    ├── get_low_stock_products.php
+|    ├── get_products_details.php
+|    ├── get_products_data.php
+|    ├── get_sale_data.php
+|    ├── get_sales_details.php
+|    ├── get_sale_reports.php
+|    ├── get_shopping_data.php
+|    ├── get_suppliers_products.php
+|    ├── get_suppliers_data.php
+|    ├──php_errors.log
+|    └── restock_products.php
+|
+├── docs/
+|    ├── diagrams/
+|    │   ├── use_case.png
+|    │   ├── navigation_tree.jpg
+|    │   ├── sequence_diagram(add_product).png
+|    │   ├── sequence_diagram(add_supplier).png
+|    │   ├── sequence_diagram(login).png
+|    │   ├── sequence_diagram(register_purchase).png
+|    │   ├── sequence_diagram(reports).png
+|    │   └── sequence_diagram(restock).png
+|    ├── sources/
+|    │   ├── add_product.txt
+|    │   ├── add_supplier.txt
+|    │   ├── login.txt
+|    │   ├── navigation_tree.txt
+|    │   ├── register_puchase.txt
+|    │   ├── reports.txt
+|    │   ├── restock.txt
+|    │   └── use_case.txt
+|    └── uml/
+|        ├── add_product.puml
+|        ├── add_supplier.puml
+|        ├── login.puml
+|        ├── reg_sale.puml
+|        ├── register_puchase.puml
+|        ├── reports.puml
+|        ├── restock.puml
+|        └── use_case.puml
+|
+├── public/
+|   ├── assets/
+|   |    ├── logo.jpg
+|   |    ├── logo.ico
+|   |    ├── logo.jpg
+|   |    └── user_icon.jpg
+|   ├── css/
+|   |    ├── main.css
+|   |    └── sign_in.css
+|   ├── js/
+|   |    ├── alarms.js
+|   |    ├── inventory.js
+|   |    ├── main.js
+|   |    ├── reg_sale.js
+|   |    ├── reports.js
+|   |    ├── sales.js
+|   |    ├── settings.js
+|   |    ├── shopping.js
+|   |    ├── suppliers.js
+|   |    └── utils.js
+|   ├── about.php
+|   ├── add_product.php
+|   ├── alarms.php
+|   ├── index.php
+|   ├── inventory.php
+|   ├── reg_sale.php
+|   ├── reports.php
+|   ├── sales.php
+|   ├── shopping.php
+|   ├── sign_in.html
+|   └── suppliers.php
+|
+├── src/
+|   ├── auth/
+|   |     ├── login.php
+|   |     └── logout.php
+|   |
+|   ├── core/
+|   |     ├── create_backup.php
+|   |     ├── process_article.php
+|   |     ├── process_sale.php
+|   |     ├── process.php
+|   |     └── restore_backup.php
+|   |
+|   └── db/
+|       └── db_connect.php
+|
+|
+└── template/
+    ├── header.php
+    ├── aside.php
+    └── footer.php

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/sign_in.css">
+    <style>
+        .error-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+    </style>
+    <title>Iniciar sesion</title>
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-header">
+            <img src="assets/logo.jpg" alt="Logo" class="login-logo">
+            <h1>Iniciar Sesión</h1>
+        </div>
+        <form id="login-form" action="../src/auth/login.php" method="post">
+            <div id="error-container" style="display: none;"></div>
+            <div class="input-group">
+                <label for="user">Usuario</label>
+                <input type="text" name="user" id="user" class="form-control" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Contraseña</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+                <i class="bi bi-eye-fill password-toggle" id="toggle"></i>
+            </div>
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('error')) {
+                const errorContainer = document.getElementById('error-container');
+                errorContainer.innerHTML = '<div class="error-message">Usuario o contraseña incorrectos.</div>';
+                errorContainer.style.display = 'block';
+            }
+        });
+
+        const toggle = document.getElementById('toggle');
+        const password = document.getElementById('password');
+
+        toggle.addEventListener('click', function() {
+            // Cambia el tipo de input
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            
+            // Cambia el ícono del ojo
+            if (type === 'password') {
+                this.classList.remove('bi-eye-slash-fill');
+                this.classList.add('bi-eye-fill');
+            } else {
+                this.classList.remove('bi-eye-fill');
+                this.classList.add('bi-eye-slash-fill');
+            }
+        });
+    </script>
+</body>
+</html>

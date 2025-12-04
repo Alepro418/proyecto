@@ -1,0 +1,55 @@
+@startuml
+title Diagrama de Secuencia: Iniciar Sesión
+
+actor "Usuario" as U
+participant "Sistema (Interfaz)" as S
+participant "ControladorAutenticacion" as CA
+database "BaseDeDatos" as D
+
+autonumber
+
+activate U
+U -> S : 1. Abrir aplicación
+deactivate U
+
+activate S
+S -> S : 2. Carga interfaz (Modo Solo Lectura)
+U -> S : 3. Selecciona "Iniciar Sesión"
+
+S -> S : 4. Muestra formulario de login
+
+activate U
+U -> S : 5. Ingresa credenciales (usuario, contraseña)
+deactivate U
+
+S -> CA : 6. autenticar(usuario, contraseña)
+activate CA
+
+CA -> D : 7. SELECT * FROM Usuarios WHERE usuario = ?
+activate D
+D --> CA : 8. Registro de Usuario (o NULL)
+deactivate D
+
+alt Credenciales Válidas (Usuario existe y contraseñas coinciden)
+
+    CA -> CA : 9. Valida coincidencia de contraseña
+    CA --> S : 10. Autenticación exitosa
+    deactivate CA
+
+    S -> S : 11. Habilita funciones de Administrador
+    S --> U : 12. Muestra mensaje de bienvenida
+
+else Credenciales Inválidas (Usuario no existe o contraseña incorrecta)
+
+    CA -> CA : 9. Valida fallo de credenciales
+    CA --> S : 10. Fallo de autenticación
+    deactivate CA
+
+    S -> S : 11. Mantiene modo Solo Lectura
+    S --> U : 12. Muestra mensaje de error ("Credenciales incorrectas")
+
+end
+
+deactivate S
+
+@enduml

@@ -1,0 +1,61 @@
+Crear un Diagrama de Casos de Uso (UML) para un sistema praxis, siguiendo estrictamente la siguiente estructura y elementos. El actor principal interactúa con todos los casos de uso, excepto en el detalle de las funcionalidades donde se especifican las interacciones:
+
+1. 👤 Actor:
+
+Administrador
+
+2. 🏛️ Casos de Uso Principales (Óvalos, dentro de la frontera del sistema):
+
+Gestionar Producto
+
+Gestionar Proveedores
+
+Gestionar Ventas
+
+Gestionar Compra
+
+Gestionar Reportes
+
+Autenticación
+
+3. ⚙️ Detalle de Funcionalidades (Sub-Casos de Uso/Actividades) y sus Relaciones:
+
+Gestionar Producto (Incluye):
+
+Registrar nuevo producto
+
+Consultar lista de producto
+
+Abastecer Stock de producto
+
+Gestionar Proveedores (Incluye):
+
+Registrar nuevo proveedor
+
+Consultar lista de proveedor
+
+Gestionar Ventas (Incluye):
+
+Registrar venta
+
+Consultar historial de ventas
+
+Ver detalles de venta
+
+Gestionar Compra (Incluye):
+
+Registrar compra
+
+Consultar historial de compra
+
+Ver tipo de compra
+
+Gestionar Reportes
+
+Autenticación (Incluye):
+
+Iniciar sesión
+
+Cerrar sesión
+
+Asegúrate de mostrar claramente las relaciones de asociación entre el Actor Principal y los casos de uso principales, y las relaciones de inclusión (<<include>>) o extensión (<<extend>>) adecuadas entre los casos de uso principales y sus funcionalidades detalladas.

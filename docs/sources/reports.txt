@@ -1,0 +1,36 @@
+Crear un diagrama de secuencia UML para el proceso "Generar Reporte" en un sistema de inventario.
+
+Actores y Objetos (Lifelines):
+
+:Administrador (Actor)
+:Sistema (La interfaz con la que interactúa el usuario)
+:ControladorReporte (Maneja la lógica de negocio para la generación de reportes)
+:BaseDeDatos (Representa el almacenamiento de datos de transacciones)
+
+Flujo de Eventos (Mensajes):
+
+1.  El :Administrador ya ha iniciado sesión en el sistema.
+2.  El :Administrador selecciona la opción "Gestionar Reportes" en el :Sistema.
+3.  El :Sistema muestra las opciones de reportes disponibles (ej. "Reporte del Día", "Reporte de la Semana", "Reporte del Mes").
+4.  Se inicia un fragmento alternativo (alt) para manejar la selección del usuario.
+
+    --- Inicio del escenario "Selecciona Reporte del Día" ---
+5.  El :Administrador selecciona la opción "Reporte del Día".
+6.  El :Sistema envía una solicitud para generar el reporte al :ControladorReporte, especificando el período "diario".
+    --- Fin del escenario ---
+
+    --- Inicio del escenario "Selecciona Reporte de la Semana" ---
+7.  El :Administrador selecciona la opción "Reporte de la Semana".
+8.  El :Sistema envía una solicitud para generar el reporte al :ControladorReporte, especificando el período "semanal".
+    --- Fin del escenario ---
+
+    --- Inicio del escenario "Selecciona Reporte del Mes" ---
+9.  El :Administrador selecciona la opción "Reporte del Mes".
+10. El :Sistema envía una solicitud para generar el reporte al :ControladorReporte, especificando el período "mensual".
+    --- Fin del escenario ---
+
+11. El :ControladorReporte ejecuta una o varias consultas (SELECT) en la :BaseDeDatos para obtener los datos de las transacciones (ventas, compras) correspondientes al período de tiempo solicitado.
+12. La :BaseDeDatos devuelve los registros encontrados.
+13. El :ControladorReporte procesa y agrega los datos para construir el reporte consolidado.
+14. El :ControladorReporte envía el reporte generado al :Sistema.
+15. Finalmente, el :Sistema muestra el reporte con los datos consolidados al :Administrador.

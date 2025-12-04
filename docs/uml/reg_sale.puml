@@ -1,0 +1,44 @@
+@startuml
+title Registro de Nueva Venta
+
+actor User as Usuario
+participant "Interfaz (reg_sale.php)" as Frontend
+participant "API (get_products_data.php)" as API
+participant "Servidor (process_sale.php)" as Backend
+database Database as BaseDeDatos
+
+Usuario -> Frontend: Abrir página de registro de ventas
+
+Frontend -> API: fetch() solicitud de lista de productos
+activate API
+API -> BaseDeDatos: Consulta por lista de productos
+activate BaseDeDatos
+BaseDeDatos --> API: Retornar lista de productos
+deactivate BaseDeDatos
+API --> Frontend: Responder con datos de productos (JSON)
+deactivate API
+
+Usuario -> Frontend: Llenar formulario y hacer click en "Registrar Venta"
+
+Frontend -> Backend: POST datos de formulario
+activate Backend
+
+Backend -> BaseDeDatos: Iniciar transacción
+activate BaseDeDatos
+Backend -> Backend: Gestionar Cliente
+Backend -> BaseDeDatos: Insertar registro principal en 'venta'
+
+loop for each sold product (por cada producto vendido)
+    Backend -> BaseDeDatos: Verificar stock de producto
+    Backend -> BaseDeDatos: Insertar registro en 'detalle_venta'
+    Backend -> BaseDeDatos: UPDATE para disminuir stock de producto
+end
+
+Backend -> BaseDeDatos: Confirmar transacción
+deactivate BaseDeDatos
+
+Backend --> Frontend: Retornar respuesta de éxito (HTML)
+deactivate Backend
+
+Frontend -> Usuario: Mostrar mensaje de éxito
+@enduml

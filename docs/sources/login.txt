@@ -1,0 +1,31 @@
+Crear un diagrama de secuencia UML para el proceso "Iniciar Sesión" en un sistema de inventario.
+
+Actores y Objetos (Lifelines):
+
+:Usuario (Actor, inicialmente no autenticado)
+:Sistema (La interfaz con la que interactúa el usuario, ej. pantalla de login)
+:ControladorAutenticacion (Maneja la lógica de negocio para la autenticación)
+:BaseDeDatos (Representa el almacenamiento de datos de usuarios)
+
+Flujo de Eventos (Mensajes):
+
+1.  El :Usuario abre la aplicación. El :Sistema se carga y muestra la interfaz principal (ej. listas de productos, proveedores) en modo de solo lectura, con las funciones de modificación deshabilitadas.
+2.  El :Usuario selecciona la opción "Iniciar Sesión" en el :Sistema para obtener acceso completo.
+3.  El :Sistema muestra un formulario de inicio de sesión.
+4.  El :Usuario ingresa su usuario y contraseña en el formulario y confirma la acción.
+5.  El :Sistema envía una solicitud de autenticación al :ControladorAutenticacion, pasando las credenciales.
+6.  El :ControladorAutenticacion ejecuta una consulta (SELECT) en la :BaseDeDatos para buscar al usuario por su nombre de usuario.
+7.  La :BaseDeDatos devuelve el registro del usuario correspondiente (si existe), incluyendo la contraseña almacenada.
+8.  Se inicia un fragmento alternativo (alt) para manejar los dos posibles escenarios: "Credenciales Válidas" y "Credenciales Inválidas".
+
+    --- Inicio del escenario "Credenciales Válidas" ---
+9.  El :ControladorAutenticacion valida que el usuario existe y que la contraseña ingresada coincide con la almacenada.
+10. El :ControladorAutenticacion notifica al :Sistema que la autenticación fue exitosa.
+11. El :Sistema crea una sesión para el usuario (ahora considerado :Administrador), habilita todas las funcionalidades de modificación en la interfaz y muestra un mensaje de bienvenida.
+    --- Fin del escenario "Credenciales Válidas" ---
+
+    --- Inicio del escenario "Credenciales Inválidas" ---
+12. El :ControladorAutenticacion determina que el usuario no existe o que la contraseña es incorrecta.
+13. El :ControladorAutenticacion notifica al :Sistema sobre el fallo en la autenticación.
+14. El :Sistema muestra un mensaje de error al :Usuario (ej. "Usuario o contraseña incorrectos") y la interfaz permanece en modo de solo lectura.
+    --- Fin del escenario "Credenciales Inválidas" ---

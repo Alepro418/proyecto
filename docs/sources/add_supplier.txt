@@ -1,0 +1,20 @@
+Crear un diagrama de secuencia UML para el proceso "Agregar Nuevo Proveedor" en un sistema de inventario.
+
+Actores y Objetos (Lifelines):
+
+:Administrador (Actor)
+:Sistema (La interfaz con la que interactúa el usuario)
+:ControladorProveedor (Maneja la lógica de negocio para los proveedores)
+:BaseDeDatos (Representa el almacenamiento de datos)
+Flujo de Eventos (Mensajes):
+
+El :Administrador ya ha iniciado sesión en el sistema.
+El :Administrador selecciona la opción "Gestionar Proveedores" y luego "Registrar nuevo proveedor" en el :Sistema.
+El :Sistema muestra un formulario para ingresar los datos del nuevo proveedor (ej. nombre, persona de contacto, teléfono, dirección).
+El :Administrador completa el formulario con los detalles del proveedor y confirma la creación.
+El :Sistema envía una solicitud para crear el nuevo proveedor al :ControladorProveedor, pasando todos los datos ingresados.
+El :ControladorProveedor valida los datos recibidos (ej. que los campos requeridos no estén vacíos, que el formato del teléfono sea correcto).
+El :ControladorProveedor ejecuta una operación de inserción (INSERT) en la :BaseDeDatos para guardar el nuevo proveedor.
+La :BaseDeDatos confirma que el registro fue creado exitosamente.
+El :ControladorProveedor notifica al :Sistema que el proveedor ha sido agregado.
+Finalmente, el :Sistema muestra un mensaje de confirmación al :Administrador (ej. "Proveedor agregado correctamente").

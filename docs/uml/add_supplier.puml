@@ -1,0 +1,45 @@
+@startuml
+title Diagrama de Secuencia: Agregar Nuevo Proveedor
+
+actor "Administrador" as A
+participant "Sistema (Interfaz)" as S
+participant "ControladorProveedor" as C
+database "BaseDeDatos" as D
+
+autonumber
+
+activate A
+A -> S : 1. Selecciona "Registrar nuevo proveedor"
+deactivate A
+
+activate S
+S -> S : 2. Muestra formulario para ingreso de datos
+note right
+(nombre, contacto, teléfono, dirección, etc.)
+end note
+
+activate A
+A -> S : 3. Completa y Confirma la creación
+deactivate A
+
+S -> C : 4. crearProveedor(datosProveedor)
+activate C
+
+C -> C : 5. Valida datos
+alt Datos Válidos
+    C -> D : 6. INSERT INTO Proveedor (datos)
+    activate D
+    D --> C : 7. Confirmación de registro exitoso
+    deactivate D
+    C --> S : 8. Notificación: proveedor agregado
+else Datos Inválidos
+    C --> S : 8a. Error: Datos del proveedor inválidos
+    S --> A : 9a. Muestra mensaje de error
+end
+
+deactivate C
+
+S --> A : 9. Muestra mensaje de confirmación
+deactivate S
+
+@enduml

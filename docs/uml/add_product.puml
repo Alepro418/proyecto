@@ -1,0 +1,45 @@
+@startuml
+title Diagrama de Secuencia: Agregar Nuevo Producto
+
+actor "Administrador" as A
+participant "Sistema (Interfaz)" as S
+participant "ControladorProducto" as C
+database "BaseDeDatos" as D
+
+autonumber
+
+activate A
+A -> S : 1. Selecciona "Agregar nuevo producto"
+deactivate A
+
+activate S
+S -> S : 2. Muestra formulario de ingreso de datos
+note right
+(nombre, descripción, precio, stock, etc.)
+end note
+
+activate A
+A -> S : 3. Completa y Confirma Creación
+deactivate A
+
+S -> C : 4. crearProducto(datosProducto)
+activate C
+
+C -> C : 5. Valida datos
+alt Datos Válidos
+    C -> D : 6. INSERT INTO Producto (datos)
+    activate D
+    D --> C : 7. Confirmación de registro exitoso
+    deactivate D
+    C --> S : 8. Notificación: producto agregado
+else Datos Inválidos
+    C --> S : 8a. Error: Datos de producto inválidos
+    S --> A : 9a. Muestra mensaje de error
+end
+
+deactivate C
+
+S --> A : 9. Muestra mensaje de confirmación
+deactivate S
+
+@enduml

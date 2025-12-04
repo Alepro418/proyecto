@@ -1,0 +1,216 @@
+/* General Body & Login Styles */
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fa
+}
+
+.login-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+#login-form {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(20, 30, 50, 0.12);
+}
+
+#login-form h1 {
+    margin: 0 0 18px 0;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Generic Form & Input Styles */
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+/* Table Styles */
+.table-container {
+    background-color: #fff;
+    border-radius: .5rem;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    padding: 1.5rem;
+}
+
+/* Notification & Modal Styles (Global) */
+#low-stock-notifications {
+    position: fixed;
+    top: 5rem; /* Adjusted to be below the header */
+    right: 1rem;
+    z-index: 1050;
+    width: 350px;
+}
+
+.notification {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.close-btn {
+    cursor: pointer;
+}
+
+/* Modal styles */
+.modal {
+    --bs-modal-zindex: 1055;
+}
+
+/* Pagination Footer */
+.pagination_footer {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+/* Sale Registration Form */
+.reg-sale-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin: 20px auto;
+}
+
+.reg-sale-form .product-item {
+    border: 1px solid #eee;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.reg-sale-form .total-section {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+}
+
+.low-stock {
+    color: red;
+    font-weight: bold;
+}
+
+/* Estilos específicos para el formulario de ventas, si difieren de style.css */
+.reg_sale-body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+.reg_sale-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 700px; /* Slightly wider to accommodate new fields */
+    margin: 20px auto;
+}
+.reg_sale-h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+.reg_sale-h3 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+.reg_sale-form-group {
+    margin-bottom: 20px;
+}
+.reg_sale-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+.reg_sale-input[type="text"],
+.reg_sale-input[type="number"],
+.reg_sale-input[type="date"],
+.reg_sale-select,
+.reg_sale-textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+.reg_sale-input[type="number"] {
+    -moz-appearance: textfield; /* Para Firefox */
+}
+.reg_sale-input[type="number"]::-webkit-outer-spin-button,
+.reg_sale-input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.reg_sale-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}
+.reg_sale-button:hover {
+    background-color: #0056b3;
+}
+.reg_sale-product-item {
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+    position: relative;
+    background-color: #f9f9f9;
+}
+.reg_sale-product-item hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+.reg_sale-remove-product-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: auto; /* Anula el width: 100% del botón general */
+}
+.reg_sale-remove-product-btn:hover {
+    background-color: #c82333;
+}
+.reg_sale-total-section {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #007bff;
+}
+.reg_sale-error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}

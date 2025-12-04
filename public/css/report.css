@@ -1,0 +1,88 @@
+/* reports.css */
+.report-type-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.report-type-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-color: var(--primary-color);
+}
+
+.report-type-card.active {
+    border-color: var(--primary-color);
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+
+/* Estilos para la tabla de reportes */
+#report-table {
+    font-size: 0.9rem;
+}
+
+#report-table th {
+    background-color: #f8f9fa;
+    position: sticky;
+    top: 0;
+    font-weight: 600;
+}
+
+#report-table tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Badges para estadísticas */
+#report-stats .badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+}
+
+/* Gráfico responsive */
+#report-chart {
+    max-height: 400px;
+}
+
+/* Estilos para diferentes tipos de reportes */
+.sales-row {
+    border-left: 4px solid #007bff;
+}
+
+.inventory-row {
+    border-left: 4px solid #ffc107;
+}
+
+.top-products-row {
+    border-left: 4px solid #28a745;
+}
+
+/* Animación de carga */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .report-type-card {
+        margin-bottom: 1rem;
+    }
+    
+    #report-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    #report-stats .badge {
+        width: fit-content;
+    }
+}

@@ -1,0 +1,5 @@
+[31-Oct-2025 20:54:33 Europe/Berlin] PHP Warning:  Undefined variable $pdo in C:\xampp\htdocs\inventario_3\api\restock_product.php on line 25
+[31-Oct-2025 20:54:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function beginTransaction() on null in C:\xampp\htdocs\inventario_3\api\restock_product.php:25
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\inventario_3\api\restock_product.php on line 25

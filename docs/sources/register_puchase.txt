@@ -1,0 +1,23 @@
+Crear un diagrama de secuencia UML para el proceso "Registrar Nueva Compra" en un sistema de inventario.
+
+Actores y Objetos (Lifelines):
+
+:Administrador (Actor)
+:Sistema (La interfaz con la que interactúa el usuario)
+:ControladorCompra (Maneja la lógica de negocio para las compras)
+:BaseDeDatos (Representa el almacenamiento de datos)
+
+Flujo de Eventos (Mensajes):
+
+1.  El :Administrador ya ha iniciado sesión en el sistema.
+2.  El :Administrador selecciona la opción "Gestionar Compra" y luego "Registrar nueva compra" en el :Sistema.
+3.  El :Sistema muestra un formulario para ingresar los datos de la nueva compra (ej. producto, proveedor, cantidad, costo, tipo de compra).
+4.  El :Administrador completa el formulario con los detalles de la compra y confirma la operación.
+5.  El :Sistema envía una solicitud para crear la nueva compra al :ControladorCompra, pasando todos los datos ingresados.
+6.  El :ControladorCompra valida los datos recibidos (ej. que la cantidad y el costo sean valores positivos).
+7.  El :ControladorCompra ejecuta una operación de inserción (INSERT) en la :BaseDeDatos para guardar el nuevo registro de compra.
+8.  La :BaseDeDatos confirma que el registro de compra fue creado exitosamente.
+9.  A continuación, el :ControladorCompra ejecuta una operación de actualización (UPDATE) en la :BaseDeDatos para incrementar el stock del producto correspondiente a la compra.
+10. La :BaseDeDatos confirma que el stock del producto fue actualizado correctamente.
+11. El :ControladorCompra notifica al :Sistema que la compra ha sido registrada y el stock actualizado.
+12. Finalmente, el :Sistema muestra un mensaje de confirmación al :Administrador (ej. "Compra registrada y stock actualizado correctamente").

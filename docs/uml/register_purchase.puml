@@ -1,0 +1,51 @@
+@startuml
+title Diagrama de Secuencia: Registrar Nueva Compra
+
+actor "Administrador" as A
+participant "Sistema (Interfaz)" as S
+participant "ControladorCompra" as CC
+database "BaseDeDatos" as D
+
+autonumber
+
+activate A
+A -> S : 1. Selecciona "Registrar nueva compra"
+deactivate A
+
+activate S
+S -> S : 2. Muestra formulario para ingreso de datos
+note right
+(producto, proveedor, cantidad, costo, etc.)
+end note
+
+activate A
+A -> S : 3. Completa y Confirma la operación
+deactivate A
+
+S -> CC : 4. registrarCompra(datosCompra)
+activate CC
+
+CC -> CC : 5. Valida datos de la compra
+alt Datos Válidos
+    CC -> D : 6. INSERT INTO Compra (datos)
+    activate D
+    D --> CC : 7. Confirmación: Compra registrada
+    deactivate D
+
+    CC -> D : 8. UPDATE Producto SET stock = stock + cantidad
+    activate D
+    D --> CC : 9. Confirmación: Stock actualizado
+    deactivate D
+
+    CC --> S : 10. Notificación: Compra y Stock OK
+else Datos Inválidos
+    CC --> S : 10a. Error: Datos de compra inválidos
+    S --> A : 11a. Muestra mensaje de error
+end
+
+deactivate CC
+
+S --> A : 11. Muestra mensaje de confirmación
+deactivate S
+
+@enduml

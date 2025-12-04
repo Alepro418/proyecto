@@ -1,0 +1,55 @@
+@startuml AbastecerStockDeUnProducto
+title Diagrama de Secuencia: Abastecer Stock de un Producto
+
+actor "Administrador" as A
+participant "Sistema" as S
+participant "ControladorProducto" as C
+database "BaseDeDatos" as D
+
+autonumber
+
+note over A, S: El Administrador ya ha iniciado sesión
+
+A -> S: 1. Solicita ver la lista de productos
+activate S
+
+S -> C: 2. Obtener lista de productos
+activate C
+
+C -> D: 3. Consulta (SELECT * FROM Productos)
+activate D
+
+D --> C: 4. Lista de Productos
+deactivate D
+
+C --> S: 5. Lista de Productos
+deactivate C
+
+S -> A: 6. Muestra la lista completa de productos
+deactivate S
+
+A -> S: 7. Selecciona producto y elige "Abastecer"
+activate S
+
+S -> A: 8. Solicita cantidad de stock a añadir
+note right of S: Interfaz de ingreso
+
+A -> S: 9. Introduce cantidad (ej. 50) y confirma
+activate S
+
+S -> C: 10. ActualizarStock(productoID, cantidad)
+activate C
+
+C -> D: 11. Ejecuta UPDATE Stock = Stock + cantidad
+activate D
+
+D --> C: 12. Confirmación de éxito
+deactivate D
+
+C --> S: 13. Notificación de stock actualizado
+deactivate C
+
+S -> A: 14. Muestra mensaje de confirmación
+deactivate S
+
+@enduml
