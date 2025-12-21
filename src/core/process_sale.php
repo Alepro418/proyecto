@@ -3,6 +3,8 @@
 
 // Incluir la conexión a la base de datos con PDO
 require_once '../db/db_connect.php';
+// Incluir FPDF
+require_once '../../pdf/fpdf.php';
 
 $pdo = get_db_connection();
 
@@ -35,6 +37,159 @@ function show_error_page($message, $redirect_url) {
             </body>
             </html>";
     exit();
+}
+
+// Función para generar el PDF del recibo
+function generateReceiptPDF($venta_id, $pdo) {
+    // Obtener información de la venta
+    $sql_venta = "SELECT v.*, c.nombre_cliente, c.cedula_rif, DATE_FORMAT(v.fecha_venta, '%d/%m/%Y %H:%i') as fecha_formateada
+                  FROM venta v 
+                  JOIN clientes c ON v.id_cliente = c.id_cliente 
+                  WHERE v.id_venta = ?";
+    $stmt_venta = $pdo->prepare($sql_venta);
+    $stmt_venta->execute([$venta_id]);
+    $venta = $stmt_venta->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$venta) {
+        throw new Exception("No se encontró la información de la venta.");
+    }
+    
+    // DEBUG: Verificar qué datos estamos obteniendo
+    // echo "<pre>Datos de la venta: ";
+    // print_r($venta);
+    // echo "</pre>";
+    
+    // Verificar que tenemos el método de pago
+    if (!isset($venta['metodo_pago'])) {
+        // Intentar con otro nombre de columna
+        if (isset($venta['metodo_pago'])) {
+            // Ya está bien
+        } elseif (isset($venta['Metodo_pago'])) {
+            $venta['metodo_pago'] = $venta['Metodo_pago'];
+        } elseif (isset($venta['METODO_PAGO'])) {
+            $venta['metodo_pago'] = $venta['METODO_PAGO'];
+        } else {
+            $venta['metodo_pago'] = 'No especificado';
+        }
+    }
+    
+    // Obtener detalles de los productos vendidos
+    $sql_detalle = "SELECT dv.*, p.Nombre_Producto 
+                    FROM detalle_venta dv 
+                    JOIN productos p ON dv.ID_Producto = p.ID_Producto 
+                    WHERE dv.ID_venta = ?";
+    $stmt_detalle = $pdo->prepare($sql_detalle);
+    $stmt_detalle->execute([$venta_id]);
+    $detalles = $stmt_detalle->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Verificar que tenemos detalles
+    if (empty($detalles)) {
+        throw new Exception("No se encontraron detalles de productos para esta venta.");
+    }
+    
+    // Crear instancia de FPDF
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    
+    // Configurar fuentes
+    $pdf->SetFont('Arial', 'B', 16);
+    
+    // Encabezado del recibo
+    $pdf->Cell(0, 10, 'RECIBO DE VENTA', 0, 1, 'C');
+    $pdf->Ln(5);
+    
+    // Información de la empresa (puedes personalizar esto)
+    $pdf->SetFont('Arial', '', 10);
+    $pdf->Cell(0, 6, 'Inversiones Supreme PC', 0, 1, 'C');
+    $pdf->Cell(0, 6, 'Local N, CC SANTIAGO, CALLE URDANETA, 2 Nte., Puerto Cabello 2050, Carabobo', 0, 1, 'C');
+    $pdf->Cell(0, 6, 'Telefono: 000-000-0000 | Email: empresa@ejemplo.com', 0, 1, 'C');
+    $pdf->Ln(5);
+    
+    // Línea separadora
+    $pdf->SetLineWidth(0.5);
+    $pdf->Line(10, $pdf->GetY(), 200, $pdf->GetY());
+    $pdf->Ln(5);
+    
+    // Información del recibo
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(50, 8, 'No. Recibo:', 0, 0);
+    $pdf->Cell(0, 8, str_pad($venta['id_venta'], 6, '0', STR_PAD_LEFT), 0, 1);
+    
+    $pdf->Cell(50, 8, 'Fecha:', 0, 0);
+    $pdf->Cell(0, 8, $venta['fecha_formateada'], 0, 1);
+    
+    $pdf->Cell(50, 8, 'Cliente:', 0, 0);
+    $pdf->Cell(0, 8, $venta['nombre_cliente'], 0, 1);
+    
+    $pdf->Cell(50, 8, 'Cedula/RIF:', 0, 0);
+    $pdf->Cell(0, 8, $venta['cedula_rif'], 0, 1);
+    
+    $pdf->Cell(50, 8, 'Metodo de Pago:', 0, 0);
+    $pdf->Cell(0, 8, $venta['metodo_pago'], 0, 1);
+    
+    if (!empty($venta['referencia_pago'])) {
+        $pdf->Cell(50, 8, 'Referencia:', 0, 0);
+        $pdf->Cell(0, 8, $venta['referencia_pago'], 0, 1);
+    }
+    
+    $pdf->Ln(10);
+    
+    // Encabezado de la tabla de productos
+    $pdf->SetFont('Arial', 'B', 11);
+    $pdf->SetFillColor(200, 220, 255);
+    $pdf->Cell(15, 10, 'Cant.', 1, 0, 'C', true);
+    $pdf->Cell(95, 10, 'Descripcion', 1, 0, 'C', true);
+    $pdf->Cell(40, 10, 'Precio Unit.', 1, 0, 'C', true);
+    $pdf->Cell(40, 10, 'Subtotal', 1, 1, 'C', true);
+    
+    $pdf->SetFont('Arial', '', 10);
+    $total = 0;
+    
+    // Detalles de productos
+    foreach ($detalles as $detalle) {
+        // Asegurar que tenemos los campos correctos
+        $cantidad = $detalle['Cantidad_producto'] ?? $detalle['cantidad_producto'] ?? 0;
+        $precio = $detalle['Precio_unitario_venta'] ?? $detalle['precio_unitario_venta'] ?? 0;
+        $nombre = $detalle['Nombre_Producto'] ?? $detalle['nombre_producto'] ?? 'Producto';
+        
+        $subtotal = $cantidad * $precio;
+        $total += $subtotal;
+        
+        $pdf->Cell(15, 8, $cantidad, 1, 0, 'C');
+        $pdf->Cell(95, 8, $nombre, 1, 0, 'L');
+        $pdf->Cell(40, 8, number_format($precio, 2, ',', '.'), 1, 0, 'R');
+        $pdf->Cell(40, 8, number_format($subtotal, 2, ',', '.'), 1, 1, 'R');
+    }
+    
+    // Total
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(150, 10, 'TOTAL:', 0, 0, 'R');
+    $pdf->Cell(40, 10, number_format($total, 2, ',', '.'), 1, 1, 'R');
+    
+    $pdf->Ln(15);
+    
+    // Mensaje de agradecimiento
+    $pdf->SetFont('Arial', 'I', 10);
+    $pdf->Cell(0, 8, '¡Gracias por su compra!', 0, 1, 'C');
+    $pdf->Cell(0, 8, 'Este documento no es valido como factura fiscal', 0, 1, 'C');
+    
+    // Generar nombre del archivo
+    $filename = 'recibo_venta_' . str_pad($venta['id_venta'], 6, '0', STR_PAD_LEFT) . '.pdf';
+    $filepath = '../pdf/recibos/' . $filename;
+    
+    // Crear directorio si no existe
+    if (!file_exists('../pdf/recibos/')) {
+        mkdir('../pdf/recibos/', 0777, true);
+    }
+    
+    // Guardar el PDF
+    $pdf->Output('F', $filepath);
+    
+    return [
+        'filename' => $filename,
+        'filepath' => $filepath,
+        'venta_id' => $venta['id_venta']
+    ];
 }
 
 if (isset($_POST['reg_sale'])) {
@@ -126,11 +281,19 @@ if (isset($_POST['reg_sale'])) {
             $stmt_update_stock->execute([$product_quantity, $product_id]);
         }
 
+        // 4. Generar el PDF del recibo
+        $pdf_info = generateReceiptPDF($last_id_venta, $pdo);
+
         // Si todo fue bien, confirmar la transacción
         $pdo->commit();
+        
         $message_type = 'success';
         $message_text = "¡Venta registrada exitosamente y stock actualizado!";
         $redirect_url = "../../public/sales.php"; // Redirigir al historial de ventas
+        
+        // Agregar enlace para descargar el PDF
+        $pdf_download_url = "../pdf/recibos/" . $pdf_info['filename'];
+        $message_text .= "<br><br><a href='" . htmlspecialchars($pdf_download_url) . "' target='_blank' style='color: #007bff; text-decoration: none; font-weight: bold;'>Descargar Recibo PDF</a>";
 
     } catch (Exception $e) {
         // Si algo falla, revertir la transacción
@@ -157,16 +320,55 @@ if (isset($_POST['reg_sale'])) {
         <meta http-equiv="refresh" content="3;url=<?php echo htmlspecialchars($redirect_url); ?>">
     <?php endif; ?>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .message-container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); text-align: center; max-width: 400px; width: 90%; }
-        .success-message { color: #28a745; font-size: 1.2em; margin-bottom: 20px; }
-        p { color: #333; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background-color: #f4f4f4; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+        }
+        .message-container { 
+            background-color: #fff; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 
+            text-align: center; 
+            max-width: 500px; 
+            width: 90%; 
+        }
+        .success-message { 
+            color: #28a745; 
+            font-size: 1.2em; 
+            margin-bottom: 20px; 
+        }
+        .pdf-link {
+            display: inline-block;
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .pdf-link:hover {
+            background-color: #c82333;
+        }
+        p { 
+            color: #333; 
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
     <div class="message-container">
-        <p class="success-message"><?php echo htmlspecialchars($message_text); ?></p>
+        <p class="success-message"><?php echo $message_text; ?></p>
         <p>Serás redirigido en breve. Si no, haz clic <a href="<?php echo htmlspecialchars($redirect_url); ?>">aquí</a>.</p>
+        <?php if (isset($pdf_info)): ?>
+            <p>También puedes <a href="<?php echo htmlspecialchars($pdf_download_url); ?>" target="_blank" class="pdf-link">Descargar el Recibo PDF</a></p>
+        <?php endif; ?>
     </div>
 </body>
 </html>
