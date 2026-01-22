@@ -76,11 +76,29 @@ document.addEventListener('DOMContentLoaded', function() {
                         <td>Bs ${parseFloat(sale.Total_venta).toFixed(2)}</td>
                         <td></td>
                     `;
+
+                    // Contenedor para botones de acciones
+                    const btnGroup = document.createElement('div');
+                    btnGroup.className = 'btn-group';
+
+                    // Botón de Ver Detalles
                     const detailsButton = document.createElement('button');
-                    detailsButton.innerHTML = '<i class="bi bi-eye-fill"></i> Ver Detalles';
+                    detailsButton.innerHTML = '<i class="bi bi-eye-fill"></i>';
                     detailsButton.className = 'btn btn-sm btn-outline-info';
+                    detailsButton.title = 'Ver Detalles';
                     detailsButton.onclick = () => showSaleDetails(sale.ID_venta);
-                    row.cells[7].appendChild(detailsButton);
+
+                    // Botón de PDF
+                    const pdfButton = document.createElement('a');
+                    pdfButton.innerHTML = '<i class="bi bi-file-earmark-pdf-fill"></i>';
+                    pdfButton.className = 'btn btn-sm btn-outline-danger';
+                    pdfButton.title = 'Descargar Recibo';
+                    pdfButton.target = '_blank';
+                    pdfButton.href = `../src/core/generate_receipt.php?id=${sale.ID_venta}`;
+
+                    btnGroup.appendChild(detailsButton);
+                    btnGroup.appendChild(pdfButton);
+                    row.cells[7].appendChild(btnGroup);
                 });
             }
 
@@ -99,7 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
 
             if (data.error) {
-                showToast('Error', data.error, 'danger');
+                // Asumiendo que showToast existe en utils.js o similar
+                if (typeof showToast === 'function') {
+                    showToast('Error', data.error, 'danger');
+                } else {
+                    alert(data.error);
+                }
                 return;
             }
 
@@ -129,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         } catch (error) {
             console.error('Error fetching sale details:', error);
-            showToast('Error de Red', 'No se pudieron cargar los detalles de la venta.', 'danger');
         }
     }
 

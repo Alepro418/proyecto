@@ -79,6 +79,7 @@ proyecto/
 |   |     └── logout.php
 |   |
 |   ├── core/
+|   |     ├── generate_receipt.php
 |   |     ├── create_backup.php
 |   |     ├── process_article.php
 |   |     ├── process_sale.php
