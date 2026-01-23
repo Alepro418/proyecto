@@ -97,7 +97,7 @@ INSERT INTO `productos` (`id_producto`, `codigo`, `nombre_producto`, `precio_de_
 (47, 'MS-407', 'Sello Fechador', 2683.29, 4919.36, 12, 3, '2026-01-08', 'Pasillo 2 Estante 4', 9),
 (48, 'MS-408', 'Tinta para Sellos', 745.36, 1431.09, 25, 6, '2026-01-08', 'Pasillo 2 Estante 4', 9),
 (49, 'MS-409', 'Destructora de Papel', 13416.44, 22369.73, 5, 1, '2025-12-15', 'Pasillo 5 Estante 2', 9),
-(50, 'MS-410', 'Reposapiés Oficina', 5366.58, 9549.58, 10, 2, '2025-12-20', 'Pasillo 5 Estante 3', 9);
+(50, 'MS-410', 'Reposapiés Oficina', 5366.58, 9549.58, 10, 2, '2025-12-20', 'Pasillo 5 Estante 3', 9),
 (51, 'TG-501', 'Teclado Mecánico RGB', 8944.29, 14907.16, 15, 3, '2026-01-15', 'Pasillo 4 Estante 5', 1),
 (52, 'TG-502', 'Monitor 24 Pulgadas', 35777.18, 53665.77, 10, 2, '2026-01-15', 'Pasillo 5 Estante 4', 1),
 (53, 'TG-503', 'Cámara Web HD', 4472.15, 8348.01, 25, 5, '2026-01-15', 'Pasillo 4 Estante 5', 1),

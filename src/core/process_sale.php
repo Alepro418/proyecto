@@ -102,7 +102,7 @@ function generateReceiptPDF($venta_id, $pdo) {
     $pdf->SetFont('Arial', '', 10);
     $pdf->Cell(0, 6, 'Inversiones Supreme PC', 0, 1, 'C');
     $pdf->Cell(0, 6, 'Local N, CC SANTIAGO, CALLE URDANETA, 2 Nte., Puerto Cabello 2050, Carabobo', 0, 1, 'C');
-    $pdf->Cell(0, 6, 'Telefono: 000-000-0000 | Email: empresa@ejemplo.com', 0, 1, 'C');
+    $pdf->Cell(0, 6, 'Telefono: 412-503-5670 | Email: contacto@inversionesuprema.com', 0, 1, 'C');
     $pdf->Ln(5);
     
     // Línea separadora
@@ -125,7 +125,7 @@ function generateReceiptPDF($venta_id, $pdo) {
     $pdf->Cell(0, 8, $venta['cedula_rif'], 0, 1);
     
     $pdf->Cell(50, 8, 'Metodo de Pago:', 0, 0);
-    $pdf->Cell(0, 8, $venta['metodo_pago'], 0, 1);
+    $pdf->Cell(0, 8, utf8_decode($venta['metodo_pago']), 0, 1);
     
     if (!empty($venta['referencia_pago'])) {
         $pdf->Cell(50, 8, 'Referencia:', 0, 0);
@@ -170,8 +170,8 @@ function generateReceiptPDF($venta_id, $pdo) {
     
     // Mensaje de agradecimiento
     $pdf->SetFont('Arial', 'I', 10);
-    $pdf->Cell(0, 8, '¡Gracias por su compra!', 0, 1, 'C');
-    $pdf->Cell(0, 8, 'Este documento no es valido como factura fiscal', 0, 1, 'C');
+    $pdf->Cell(0, 8, utf8_decode('¡Gracias por su compra!'), 0, 1, 'C');
+    $pdf->Cell(0, 8, utf8_decode('Este documento no es valido como factura fiscal'), 0, 1, 'C');
     
     // Generar nombre del archivo
     $filename = 'recibo_venta_' . str_pad($venta['id_venta'], 6, '0', STR_PAD_LEFT) . '.pdf';
@@ -205,6 +205,7 @@ if (isset($_POST['reg_sale'])) {
         $dni = $doc_type . $dni_number; // Concatenar para formar, por ej., 'V12345678'
         $pay_method = $_POST['pay_method'];
         $referencia = !empty($_POST['referencia']) ? trim($_POST['referencia']) : null;
+        $subtotal = filter_var($_POST['subtotal'], FILTER_VALIDATE_FLOAT);
         $total_venta = filter_var($_POST['total_venta'], FILTER_VALIDATE_FLOAT);
 
         // Validaciones básicas
@@ -229,9 +230,9 @@ if (isset($_POST['reg_sale'])) {
         }
 
         // 2. Insertar datos en la tabla `venta` usando el id_cliente
-        $sql_venta = "INSERT INTO venta (id_cliente, fecha_venta, metodo_pago, referencia_pago, total_venta) VALUES (?, ?, ?, ?, ?)";
+        $sql_venta = "INSERT INTO venta (id_cliente, fecha_venta, metodo_pago, referencia_pago, subtotal, total_venta) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt_venta = $pdo->prepare($sql_venta);
-        $stmt_venta->execute([$id_cliente, $fecha, $pay_method, $referencia, $total_venta]);
+        $stmt_venta->execute([$id_cliente, $fecha, $pay_method, $referencia, $subtotal, $total_venta]);
         $last_id_venta = $pdo->lastInsertId();
 
         // 3. Procesar los detalles de los productos

@@ -219,6 +219,7 @@
                             <div class="d-flex justify-content-end align-items-center mb-3">
                                 <h4 class="me-3">Total de la Venta: <span id="grand-total">0.00</span> Bs</h4>
                                 <input type="hidden" name="total_venta" id="hidden_grand_total">
+                                <input type="hidden" name="subtotal" id="hidden_subtotal">
                             </div>
 
                             <div class="d-grid">

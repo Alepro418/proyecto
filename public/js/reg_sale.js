@@ -89,6 +89,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         grandTotalSpan.textContent = grandTotal.toFixed(2);
         hiddenGrandTotalInput.value = grandTotal.toFixed(2); // Update hidden input for form submission
+
+        const hiddenSubtotalInput = document.getElementById('hidden_subtotal');
+        if (hiddenSubtotalInput) {
+            hiddenSubtotalInput.value = grandTotal.toFixed(2);
+        }
     }
 
     // Event listener for adding new product items
