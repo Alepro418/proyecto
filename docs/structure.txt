@@ -44,8 +44,7 @@ proyecto/
 ├── public/
 |   ├── assets/
 |   |    ├── logo.jpg
-|   |    ├── logo.ico
-|   |    ├── logo.jpg
+|   |    ├── logo2.jpg
 |   |    └── user_icon.jpg
 |   ├── css/
 |   |    ├── main.css

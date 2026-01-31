@@ -38,7 +38,7 @@
         <div class="sidebar col-md-3 col-lg-2 p-0">
             <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 100%; min-height: 100vh;">
                 <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <img src="assets/logo.jpg" alt="Logo" width="40" height="40" class="rounded-circle me-2">
+                    <img src="assets/logo.png" alt="Logo" width="40" height="40" class="rounded-circle me-2">
                     <span class="fs-4">Praxis</span>
                 </a>
                 <hr>
@@ -103,6 +103,12 @@
                         <a href="backup.php" class="nav-link text-white">
                             <i class="bi bi-database-fill me-2"></i>
                             Copias de Seguridad
+                        </a>
+                    </li>
+                    <li>
+                        <a href="assets/manual_usuario.pdf" class="nav-link text-white" download="manual_usuario.pdf">
+                            <i class="bi bi-file-earmark-pdf-fill me-2"></i>
+                            Descargar manual
                         </a>
                     </li>
                     <li>

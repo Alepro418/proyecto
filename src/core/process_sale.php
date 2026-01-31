@@ -91,41 +91,52 @@ function generateReceiptPDF($venta_id, $pdo) {
     $pdf = new FPDF();
     $pdf->AddPage();
     
-    // Configurar fuentes
-    $pdf->SetFont('Arial', 'B', 16);
-    
+    $ruta_logo = realpath(__DIR__ . '/../../public/assets/logo3.png');
+
+    if ($ruta_logo && file_exists($ruta_logo)) {
+        $pdf->Image($ruta_logo, 10, 10, 35);
+    }
+
+    $pdf->SetXY(50, 12);
+    $pdf->SetFont('Arial', 'B', 14);
+    $pdf->Cell(0, 7, utf8_decode('INVERSIONES SUPREMA PC'), 0, 1, 'L');
+
+    $pdf->SetX(50);
+    $pdf->SetFont('Arial', '', 9);
+    $info_empresa = "RIF: J-50192281-0\n" .
+                    "Local N, CC SANTIAGO, CALLE URDANETA\n" .
+                    "Puerto Cabello, Carabobo\n" .
+                    "Tel: 412-503-5670";
+    $pdf->MultiCell(0, 4, utf8_decode($info_empresa), 0, 'L');
+    $pdf->Ln(10);
     // Encabezado del recibo
+    $pdf->SetFont('Arial', 'B', 16);
     $pdf->Cell(0, 10, 'RECIBO DE VENTA', 0, 1, 'C');
-    $pdf->Ln(5);
-    
-    // Información de la empresa (puedes personalizar esto)
-    $pdf->SetFont('Arial', '', 10);
-    $pdf->Cell(0, 6, 'Inversiones Supreme PC', 0, 1, 'C');
-    $pdf->Cell(0, 6, 'Local N, CC SANTIAGO, CALLE URDANETA, 2 Nte., Puerto Cabello 2050, Carabobo', 0, 1, 'C');
-    $pdf->Cell(0, 6, 'Telefono: 412-503-5670 | Email: contacto@inversionesuprema.com', 0, 1, 'C');
-    $pdf->Ln(5);
     
     // Línea separadora
     $pdf->SetLineWidth(0.5);
     $pdf->Line(10, $pdf->GetY(), 200, $pdf->GetY());
     $pdf->Ln(5);
+
+    $pdf->SetFont('Arial', '', 11);
+
+    // Fila 1
+    $pdf->Cell(30, 7, 'No. Recibo:', 0, 0);
+    $pdf->SetFont('Arial', 'B', 11);
+    $pdf->Cell(70, 7, str_pad($venta['id_venta'], 6, '0', STR_PAD_LEFT), 0, 0);
+    $pdf->SetFont('Arial', '', 11);
+    $pdf->Cell(30, 7, 'Fecha:', 0, 0);
+    $pdf->Cell(0, 7, $venta['fecha_formateada'], 0, 1);
     
-    // Información del recibo
-    $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell(50, 8, 'No. Recibo:', 0, 0);
-    $pdf->Cell(0, 8, str_pad($venta['id_venta'], 6, '0', STR_PAD_LEFT), 0, 1);
+    // Fila 2
+    $pdf->Cell(30, 7, 'Cliente:', 0, 0);
+    $pdf->Cell(70, 7, utf8_decode($venta['nombre_cliente']), 0, 0);
+    $pdf->Cell(30, 7, 'Cedula/RIF:', 0, 0);
+    $pdf->Cell(0, 7, $venta['cedula_rif'], 0, 1);
     
-    $pdf->Cell(50, 8, 'Fecha:', 0, 0);
-    $pdf->Cell(0, 8, $venta['fecha_formateada'], 0, 1);
+    $pdf->Cell(30, 7, 'Metodo Pago:', 0, 0);
+    $pdf->Cell(70, 7, utf8_decode($venta['metodo_pago']), 0, 1);
     
-    $pdf->Cell(50, 8, 'Cliente:', 0, 0);
-    $pdf->Cell(0, 8, $venta['nombre_cliente'], 0, 1);
-    
-    $pdf->Cell(50, 8, 'Cedula/RIF:', 0, 0);
-    $pdf->Cell(0, 8, $venta['cedula_rif'], 0, 1);
-    
-    $pdf->Cell(50, 8, 'Metodo de Pago:', 0, 0);
-    $pdf->Cell(0, 8, utf8_decode($venta['metodo_pago']), 0, 1);
     
     if (!empty($venta['referencia_pago'])) {
         $pdf->Cell(50, 8, 'Referencia:', 0, 0);

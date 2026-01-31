@@ -176,6 +176,18 @@ CREATE TABLE `compras` (
   CONSTRAINT `fk_compra_proveedor` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `compras` (`id_compra`, `fecha_compra`, `id_proveedor`, `total_compra`, `tipo_compra`) VALUES
+(1, '2026-01-15 09:30:00', 5, 15000.00, 'Adquisición'),
+(2, '2026-01-16 10:15:00', 6, 22450.50, 'Adquisición'),
+(3, '2026-01-17 14:00:00', 1, 45800.00, 'Adquisición'),
+(4, '2026-01-18 11:20:00', 7, 12300.75, 'Adquisición'),
+(5, '2026-01-19 08:45:00', 2, 8900.20, 'Adquisición'),
+(6, '2026-01-20 15:10:00', 8, 35000.00, 'Adquisición'),
+(7, '2026-01-21 09:00:00', 9, 18200.40, 'Adquisición'),
+(8, '2026-01-22 13:30:00', 3, 27650.00, 'Adquisición'),
+(9, '2026-01-23 16:00:00', 4, 31200.00, 'Adquisición'),
+(10, '2026-01-24 10:00:00', 1, 52000.00, 'Adquisición');
+
 -- 7. Tabla Detalle de Compras
 CREATE TABLE `detalle_compras` (
   `id_detalle_compra` int(11) NOT NULL AUTO_INCREMENT,

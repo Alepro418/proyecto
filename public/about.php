@@ -40,7 +40,7 @@
         <div class="sidebar-fixed d-none d-md-flex bg-dark">
             <div class="d-flex flex-column flex-shrink-0 p-3 text-white sidebar-content" style="width: 100%; min-height: 100vh;">
                 <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                    <img src="assets/logo.jpg" alt="Logo" width="40" height="40" class="rounded-circle me-2">
+                    <img src="assets/logo.png" alt="Logo" width="40" height="40" class="rounded-circle me-2">
                     <span class="fs-4">Praxis</span>
                 </a>
                 <hr>
@@ -108,6 +108,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="assets/manual_usuario.pdf" class="nav-link text-white" download="manual_usuario.pdf">
+                            <i class="bi bi-file-earmark-pdf-fill me-2"></i>
+                            Descargar manual
+                        </a>
+                    </li>
+                    <li>
                         <a href="about.php" class="nav-link active">
                             <i class="bi bi-info-circle-fill me-2"></i>
                             Acerca de
@@ -136,8 +142,16 @@
         <!-- Main content -->
         <div class="col-md-9 col-lg-10 ms-sm-auto p-4 d-flex flex-column">
             <header class="pb-3 mb-4 border-bottom">
-                <h1 class="h2">Acerca del Sistema de Inventario</h1>
-            </header>
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="h2">Acerca del Sistema de Inventario</h1>
+        </div>
+        <div class="d-flex align-items-center">
+            <img src="assets/logo.png" alt="Logo" style="height: 60px;" class="rounded-circle me-2">
+            <img src="assets/logo3.png" alt="Logo Empresa" style="height: 60px;" class="rounded-circle">
+        </div>
+    </div>
+</header>
 
             <main class="flex-grow-1">
                 <div class="card">
@@ -171,6 +185,15 @@
                         <p class="card-text mt-4">
                             <small class="text-muted">Versión del sistema: 1.0.0</small>
                         </p>
+                        <hr>
+                        <h6 class="card-subtitle mb-2 text-muted">Equipo de Desarrollo</h6>
+                        <p class="card-text">
+                            Este sistema fue desarrollado por un equipo de estudiantes de la Universidad Politécnica Territorial de Puerto Cabello, Venezuela, como parte del proyecto sociointegrador. El equipo está compuesto por:
+                        </p>
+                        <ul>
+                            <li><b>Investigador:</b> Eubis Castillo  <b>Numero de contacto: </b> 0412-9584459     <b>Correo:</b> <a href="">eubisjose@gmail.com</a></li>
+                            <li><b>Desarrollador:</b> Álvaro Parra   <b>Numero de contacto: </b> 0412-9025743     <b>Correo:</b> <a href="">parraalvaro418@gmail.com</a></li>
+                        </ul>
                     </div>
                 </div>
             </main>
